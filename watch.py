@@ -67,7 +67,7 @@ class MyHandler(PatternMatchingEventHandler):
             return self.connect_str
         else:
             connStr = ""
-            with open("./connection.txt", "r") as connection:
+            with open("./connection.json", "r") as connection:
                 print(connection)
                 connStr = connection.read()
 
