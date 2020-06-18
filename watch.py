@@ -34,8 +34,6 @@ class MyHandler(PatternMatchingEventHandler):
 
     def upload(self, path):
         blobname = str(uuid.uuid4())+".jpg"
-        print(blobname)
-
         blob_service_client = BlobServiceClient.from_connection_string(
             self.readConnectionString())
         container_name = "demo"
@@ -55,7 +53,7 @@ class MyHandler(PatternMatchingEventHandler):
 
         while True:
             try:
-                print("Deleting")
+                print("Deleting :"+path)
                 os.remove(path)
                 print("Deleted")
                 break
@@ -68,9 +66,7 @@ class MyHandler(PatternMatchingEventHandler):
         else:
             connStr = ""
             with open("./connectionstring.json", "r") as connection:
-
                 connStr = connection.read()
-                print(connStr)
                 connection.close()
             self.connect_str = connStr
             return connStr
