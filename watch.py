@@ -33,13 +33,14 @@ class MyHandler(PatternMatchingEventHandler):
         self.process(event)
 
     def upload(self, path):
-        print()
+        blobname = str(uuid.uuid4())+".jpg"
+        print(blobname)
 
         blob_service_client = BlobServiceClient.from_connection_string(
             self.readConnectionString())
         container_name = "demo"
         blob_client = blob_service_client.get_blob_client(
-            container=container_name, blob=path)
+            container=container_name, blob=blobname)
 
         tryLoading = True
         while tryLoading:
@@ -48,7 +49,6 @@ class MyHandler(PatternMatchingEventHandler):
                     tryLoading = False
                     blob_client.upload_blob(data)
                     data.close()
-
                 break
             except IOError:
                 time.sleep(3)
@@ -67,10 +67,10 @@ class MyHandler(PatternMatchingEventHandler):
             return self.connect_str
         else:
             connStr = ""
-            with open("./connection.json", "r") as connection:
-                print(connection)
-                connStr = connection.read()
+            with open("./connectionstring.json", "r") as connection:
 
+                connStr = connection.read()
+                print(connStr)
                 connection.close()
             self.connect_str = connStr
             return connStr
